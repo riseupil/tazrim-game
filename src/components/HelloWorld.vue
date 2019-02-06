@@ -1,5 +1,23 @@
 <template>
-  <div>hello</div>
+  <div>
+    <div class="score-board">
+      <div class="balance">Balance: {{ balance }}</div>
+      <div class="fun">Fun: {{ fun }}</div>
+      <div class="energy">Energy: {{ energy }}</div>
+      <div class="day">Day: {{ day }}</div>
+    </div>
+    <div class="open-cards">
+      <div class="card" v-for="(card, index) in openCards" v-bind:key="index">
+        <div class="title">Desc: {{ card.card.description }}</div>
+        <div class="fun">Fun: {{ card.card.fun }}</div>
+        <div class="energy">Energy: {{ card.card.energy }}</div>
+        <div class="cost">Cost: {{ card.card.cost }}</div>
+        <div class="turns-left">Expires in: {{ card.turnsLeft }}</div>
+        <button v-on:click="useCard(card)" :disabled="card.used">Buy</button>
+      </div>
+    </div>
+    <button v-on:click="finishDay">Finish Day</button>
+  </div>
 </template>
 
 <script>
@@ -11,6 +29,20 @@ const cards = [
     type: 'eatout',
     description: 'פיצה עם חברים',
     cost: 30,
+    fun: 2,
+    energy: 1,
+    expiration: 5,
+  }, {
+    type: 'eatout',
+    description: 'פיצה2',
+    cost: 50,
+    fun: 2,
+    energy: 1,
+    expiration: 5,
+  }, {
+    type: 'eatout',
+    description: 'פיצה3',
+    cost: 80,
     fun: 2,
     energy: 1,
     expiration: 5,
@@ -31,15 +63,37 @@ const cards = [
     energy: 0,
     expiration: 5,
   }, {
+    type: 'unexpected',
+    description: 'חור בשן2',
+    cost: 50,
+    fun: -5,
+    energy: 0,
+    expiration: 5,
+  }, {
     type: 'food',
     description: 'סופר',
     cost: 180,
+    fun: 0,
     energy: 10,
     expiration: 1,
   }, {
     type: 'opportunity',
     description: 'לראות סרט',
     cost: 50,
+    fun: 2,
+    energy: 0,
+    expiration: 5,
+  }, {
+    type: 'opportunity',
+    description: 'סרט2',
+    cost: 100,
+    fun: 2,
+    energy: 0,
+    expiration: 5,
+  }, {
+    type: 'opportunity',
+    description: 'סרט3',
+    cost: 150,
     fun: 2,
     energy: 0,
     expiration: 5,
@@ -50,36 +104,27 @@ export default {
   name: 'HelloWorld',
   data() {
     return {
-      balance: 0,
+      balance: 1000,
       fun: 0,
       energy: 10,
       day: 0,
       deck: cards,
       openCards: [],
-      // openCards: {
-      //   eatout: null,
-      //   food: null,
-      //   opportunity: [],
-      //   bill: [],
-      //   unexpected: [],
-      //
-      // },
     };
   },
   computed: {
 
   },
-  method: {
+  methods: {
     useCard(openCard) {
       openCard.used = true;
-      this.balance += openCard.card.cost;
+      this.balance -= openCard.card.cost;
       if (openCard.card.type !== 'bill' && openCard.card.type !== 'unexpected') {
         this.fun += openCard.card.fun;
         this.energy += openCard.card.energy;
       }
     },
     finishDay() {
-      this.day += 1;
       // this.deck = _.shuffle(this.deck);
       _.forEach(this.openCards, c => {
         c.turnsLeft -= 1;
@@ -94,6 +139,10 @@ export default {
       this._refreshOpportunity();
       this._refreshBills();
       this._refreshUnexpected();
+
+      this.fun -= 1;
+      this.energy -= 1;
+      this.day += 1;
     },
     _punishForExpiredBadCards() {
       _.chain(this.openCards)
@@ -139,8 +188,7 @@ export default {
       }
     },
     _drawCardByType(type) {
-      const card = _.find(this.deck, c => c.type === type);
-      _.pull(this.deck, card);
+      const card = _.shuffle(_.filter(this.deck, c => c.type === type))[0];
       return card;
     },
     _createOpenCard(card) {
