@@ -1,15 +1,33 @@
 <template>
-  <div class="container">
-    <div class="score-board">
-      <div class="day">Day: {{ day }}</div>
-      <div class="balance">{{ balance }}</div>
-      <div class="energy" v-bind:class="{ low: lowOnEnergy }">Energy: {{ energy }}</div>
-      <div class="fun">Fun: {{ fun }}</div>
-    </div>
-    <div class="open-cards">
-      <card v-for="card in sortedCards" v-bind:key="card.id" :card="card" :balance="balance" :clickcb="useCard"></card>
+  <div>
+    <div class="container">
+      <div class="score-board">
+        <div class="day">Day: {{ day }}</div>
+        <div class="balance">{{ balance }}</div>
+        <div class="energy">Energy: {{ energy }}</div>
+        <div class="fun">Fun: {{ fun }}</div>
+      </div>
+      <div class="open-cards">
+        <card v-for="card in sortedCards" v-bind:key="card.id" :card="card" :balance="balance" :clickcb="useCard"></card>
+      </div>
     </div>
     <button v-on:click="finishDay">Finish Day</button>
+    <div class="score-history">
+      <table>
+        <tr>
+          <th>day</th>
+          <th v-for="(record, index) in scoreHistory" :key="index">{{ index }}</th>
+        </tr>
+        <tr>
+          <td>energy</td>
+          <td v-for="(record, index) in scoreHistory" :key="index">{{ record.energy }}</td>
+        </tr>
+        <tr>
+          <td>fun</td>
+          <td v-for="(record, index) in scoreHistory" :key="index">{{ record.fun }}</td>
+        </tr>
+      </table>
+    </div>
   </div>
 </template>
 
@@ -31,6 +49,7 @@ export default {
       deck: cards,
       openCards: [],
       openCardCounter: 0,
+      scoreHistory: [],
     };
   },
   components: {
@@ -76,6 +95,7 @@ export default {
 
       this.fun -= 1;
       this.energy -= 1;
+      this.scoreHistory.push({ fun: this.fun, energy: this.energy });
       this.day += 1;
     },
     _punishForExpiredBadCards() {
