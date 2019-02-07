@@ -1,0 +1,61 @@
+<template>
+  <div class="card">
+    <div class="top-line">
+      <div class="cost">{{ card.card.cost }}</div>
+      <div class="title">{{ card.card.description }}</div>
+    </div>
+    <div class="fun">Fun: {{ card.card.fun }}</div>
+    <div class="energy">Energy: {{ card.card.energy }}</div>
+    <button class="button" v-on:click="clickcb(card)" :disabled="card.used">Buy</button>
+    <div class="turns-left">
+      <div>Expires in:</div>
+      <div>{{ card.turnsLeft }}</div>
+    </div>
+  </div>
+</template>
+
+<script>
+  export default {
+    name: 'Card',
+    props: [
+      'card',
+      'clickcb'
+    ],
+  }
+</script>
+
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped lang="scss">
+  @import '../riseup-colors.scss';
+  .card {
+    margin: 10px 20px;
+    border-radius: 3px;
+    box-shadow: 2px 2px 8px 0 $riseup_shadow_gray;
+    padding: 10px 30px 30px 30px;
+    width: 200px;
+    .top-line {
+      display: flex;
+      justify-content: space-between;
+      color: $riseup_mustard;
+      font-size: 24px;
+    }
+    .button {
+      width: 100%;
+      border-radius: 3px;
+      border: none;
+      background-color: $riseup_light_blue;
+      color: $riseup_white;
+      font-size: 20px;
+      line-height: 60px;
+      font-weight: bold;
+      transition: opacity 1s;
+      &:disabled {
+        opacity: 0.5;
+      }
+    }
+    .turns-left {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+</style>

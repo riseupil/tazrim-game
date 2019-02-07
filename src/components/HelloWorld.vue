@@ -1,20 +1,13 @@
 <template>
-  <div>
+  <div class="container">
     <div class="score-board">
-      <div class="balance">Balance: {{ balance }}</div>
-      <div class="fun">Fun: {{ fun }}</div>
-      <div class="energy">Energy: {{ energy }}</div>
       <div class="day">Day: {{ day }}</div>
+      <div class="balance">{{ balance }}</div>
+      <div class="energy">Energy: {{ energy }}</div>
+      <div class="fun">Fun: {{ fun }}</div>
     </div>
     <div class="open-cards">
-      <div class="card" v-for="(card, index) in openCards" v-bind:key="index">
-        <div class="title">Desc: {{ card.card.description }}</div>
-        <div class="fun">Fun: {{ card.card.fun }}</div>
-        <div class="energy">Energy: {{ card.card.energy }}</div>
-        <div class="cost">Cost: {{ card.card.cost }}</div>
-        <div class="turns-left">Expires in: {{ card.turnsLeft }}</div>
-        <button v-on:click="useCard(card)" :disabled="card.used">Buy</button>
-      </div>
+      <card v-for="(card, index) in openCards" v-bind:key="index" :card="card" :clickcb="useCard"></card>
     </div>
     <button v-on:click="finishDay">Finish Day</button>
   </div>
@@ -23,6 +16,8 @@
 <script>
 
 import _ from 'lodash';
+
+import Card from './Card.vue';
 
 const cards = [
   {
@@ -112,8 +107,8 @@ export default {
       openCards: [],
     };
   },
-  computed: {
-
+  components: {
+    Card,
   },
   methods: {
     useCard(openCard) {
@@ -204,4 +199,29 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="scss">
+  @import '../riseup-colors.scss';
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    .score-board {
+      flex: 1 25%;
+      margin: 10px 20px;
+      border-radius: 3px;
+      box-shadow: 2px 2px 8px 0 $riseup_shadow_gray;
+      padding: 10px 0 30px;
+      width: 320px;
+      .balance {
+        color: $riseup_mustard;
+        font-size: 30px;
+      }
+    }
+    .open-cards {
+      flex: 1 70%;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    button {
+      flex: 1 100%;
+    }
+  }
 </style>
