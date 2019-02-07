@@ -93,7 +93,7 @@ export default {
       // If low on energy, then you don't get to enjoy the card
       this._addToEnergy(openCard.card.buy.energy);
       if (!this.lowOnEnergy) {
-        this.fun += openCard.card.buy.fun;
+        this._addToFun(openCard.card.buy.fun);
       }
     },
     finishDay() {
@@ -113,7 +113,7 @@ export default {
       this._refreshBills();
       this._refreshUnexpected();
 
-      this.fun = Math.max(0, this.fun - 1);
+      this._addToFun(-1);
       this._addToEnergy(-1);
       this.day += 1;
 
@@ -130,7 +130,7 @@ export default {
         .reject(c => c.used)
         .map(c => c.card)
         .forEach(c => {
-          this.fun += c.expire.fun;
+          this._addToFun(c.expire.fun)
           this._addToEnergy(c.expire.energy);
         })
         .value();
@@ -182,6 +182,10 @@ export default {
     _addToEnergy(value) {
       this.energy += value;
       this.energy = Math.max(0, Math.min(10, this.energy));
+    },
+    _addToFun(value) {
+      this.fun += value;
+      this.fun = Math.max(0, this.fun);
     }
   }
 }
