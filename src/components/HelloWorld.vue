@@ -47,7 +47,12 @@ export default {
     useCard(openCard) {
       openCard.used = true;
       this.balance -= openCard.card.cost;
-      this.fun += openCard.card.buy.fun;
+
+      // If low on energy, then you don't get to enjoy the card
+      if (this.energy > 5) {
+        this.fun += openCard.card.buy.fun;
+      }
+      
       this.energy += openCard.card.buy.energy;
     },
     finishDay() {
