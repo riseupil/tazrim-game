@@ -5,6 +5,7 @@
 </template>
 
 <style lang="scss">
+@import '../node_modules/font-awesome/css/font-awesome.css';
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -1,11 +1,17 @@
 <template>
   <div class="card" v-bind:class="card.card.type">
-    <div class="top-line">
+    <div class="top-line spaced">
       <div class="cost">{{ card.card.cost }}</div>
       <div class="title">{{ card.card.description }}</div>
     </div>
-    <div class="fun">Fun: {{ card.card.buy.fun || card.card.expire.fun }}</div>
-    <div class="energy">Energy: {{ card.card.buy.energy || card.card.expire.energy }}</div>
+    <div class="fun spaced">
+      <span>Fun:</span>
+      <strong>{{ card.card.buy.fun || card.card.expire.fun }}</strong>
+    </div>
+    <div class="energy spaced">
+      <span>Energy:</span>
+      <strong>{{ card.card.buy.energy || card.card.expire.energy }}</strong>
+    </div>
     <button class="button" v-on:click="clickcb(card)" :disabled="card.used || card.card.cost > balance">Buy</button>
     <div class="turns-left">
       <div>Expires in:</div>
@@ -36,6 +42,7 @@
     width: 200px;
     border-style: solid;
     border-width: 8px;
+    font-size: 20px;
     &.opportunity {
       border-color: $riseup_light_blue;
     }
@@ -52,10 +59,17 @@
       border-color: $riseup_light_green;
     }
     .top-line {
-      display: flex;
-      justify-content: space-between;
-      color: $riseup_mustard;
-      font-size: 24px;
+      .title {
+        font-size: 24px;
+        color: black;
+        text-align: right;
+      }
+      .cost {
+        font-weight: bold;
+        text-decoration: underline;
+        font-size: 30px;
+      }
+      margin-bottom: 30px;
     }
     .button {
       width: 100%;
@@ -75,5 +89,9 @@
       display: flex;
       justify-content: space-between;
     }
+  }
+  .spaced {
+    display: flex;
+    justify-content: space-between;
   }
 </style>

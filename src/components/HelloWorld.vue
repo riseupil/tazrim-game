@@ -5,8 +5,14 @@
       <div class="score-board">
         <div class="day">Day: {{ day }}</div>
         <div class="balance">{{ balance }}</div>
-        <div class="energy" :class="{low: lowOnEnergy}">Energy: {{ energy }}</div>
-        <div class="fun">Fun: {{ fun }}</div>
+        <div class="fun spaced">
+          <span>Fun:</span>
+          <span>{{ fun }}</span>
+        </div>
+        <div class="energy spaced" :class="{low: lowOnEnergy}">
+          <span>Energy:</span>
+          <span>{{ energy }}</span>
+        </div>
       </div>
       <div class="open-cards">
         <card v-for="card in sortedCards" v-bind:key="card.id" :card="card" :balance="balance" :clickcb="useCard"></card>
@@ -74,10 +80,10 @@ export default {
       this.balance -= openCard.card.cost;
 
       // If low on energy, then you don't get to enjoy the card
+      this.energy += openCard.card.buy.energy;
       if (!this.lowOnEnergy) {
         this.fun += openCard.card.buy.fun;
       }
-      this.energy += openCard.card.buy.energy;
     },
     finishDay() {
       // this.deck = _.shuffle(this.deck);
@@ -166,15 +172,17 @@ export default {
     display: flex;
     flex-wrap: wrap;
     .score-board {
-      flex: 1 25%;
+      flex: 1 15%;
       margin: 10px 20px;
       border-radius: 3px;
       box-shadow: 2px 2px 8px 0 $riseup_shadow_gray;
-      padding: 10px 0 30px;
+      padding: 10px 10px 30px;
       width: 320px;
+      font-size: 30px;
+      font-weight: bold;
       .balance {
-        color: $riseup_mustard;
-        font-size: 30px;
+        font-size: 42px;
+        text-decoration: underline;
       }
       .energy {
         &.low {
@@ -183,12 +191,16 @@ export default {
       }
     }
     .open-cards {
-      flex: 1 70%;
+      flex: 1 75%;
       display: flex;
       flex-wrap: wrap;
     }
     button {
       flex: 1 100%;
+    }
+    .spaced {
+      display: flex;
+      justify-content: space-between;
     }
   }
 </style>

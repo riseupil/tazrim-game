@@ -13,7 +13,7 @@ export default {
   data() {
     return {
       current: 0,
-      cycle: 5,
+      cycle: 10,
     };
   },
   async created() {
