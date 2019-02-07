@@ -5,7 +5,7 @@
       <div class="score-board">
         <div class="day">Day: {{ day }}</div>
         <div class="balance">{{ balance }}</div>
-        <div class="energy">Energy: {{ energy }}</div>
+        <div class="energy" :class="{low: lowOnEnergy}">Energy: {{ energy }}</div>
         <div class="fun">Fun: {{ fun }}</div>
       </div>
       <div class="open-cards">
@@ -65,7 +65,7 @@ export default {
       return [...supermarket, ...sortedCards];
     },
     lowOnEnergy() {
-      return this.energy < 5;
+      return this.energy <= 3;
     }
   },
   methods: {
@@ -77,7 +77,6 @@ export default {
       if (!this.lowOnEnergy) {
         this.fun += openCard.card.buy.fun;
       }
-
       this.energy += openCard.card.buy.energy;
     },
     finishDay() {
