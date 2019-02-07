@@ -4,8 +4,8 @@
       <div class="cost">{{ card.card.cost }}</div>
       <div class="title">{{ card.card.description }}</div>
     </div>
-    <div class="fun">Fun: {{ card.card.fun }}</div>
-    <div class="energy">Energy: {{ card.card.energy }}</div>
+    <div class="fun">Fun: {{ card.card.buy.fun || card.card.expire.fun }}</div>
+    <div class="energy">Energy: {{ card.card.buy.energy || card.card.expire.energy }}</div>
     <button class="button" v-on:click="clickcb(card)" :disabled="card.used">Buy</button>
     <div class="turns-left">
       <div>Expires in:</div>
