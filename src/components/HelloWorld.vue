@@ -7,7 +7,7 @@
       <div class="fun">Fun: {{ fun }}</div>
     </div>
     <div class="open-cards">
-      <card v-for="(card, index) in openCards" v-bind:key="index" :card="card" :clickcb="useCard"></card>
+      <card v-for="card in sortedCards" v-bind:key="card.id" :card="card" :clickcb="useCard"></card>
     </div>
     <button v-on:click="finishDay">Finish Day</button>
   </div>
@@ -105,10 +105,18 @@ export default {
       day: 0,
       deck: cards,
       openCards: [],
+      openCardCounter: 0,
     };
   },
   components: {
     Card,
+  },
+  computed: {
+    sortedCards() {
+      const sortedCards = _.sortBy(this.openCards, openCard => openCard.id);
+      const supermarket = _.remove(sortedCards, openCard => openCard.card.type === 'food');
+      return [...supermarket, ...sortedCards];
+    },
   },
   methods: {
     useCard(openCard) {
@@ -187,12 +195,14 @@ export default {
       return card;
     },
     _createOpenCard(card) {
+      this.openCardCounter += 1;
       this.openCards.push({
         used: false,
+        id: this.openCardCounter,
         turnsLeft: card.expiration,
         card,
       });
-    }
+    },
   }
 }
 </script>
