@@ -3,7 +3,7 @@
     <div class="score-board">
       <div class="day">Day: {{ day }}</div>
       <div class="balance">{{ balance }}</div>
-      <div class="energy">Energy: {{ energy }}</div>
+      <div class="energy" v-bind:class="{ low: lowOnEnergy }">Energy: {{ energy }}</div>
       <div class="fun">Fun: {{ fun }}</div>
     </div>
     <div class="open-cards">
@@ -42,6 +42,9 @@ export default {
       const supermarket = _.remove(sortedCards, openCard => openCard.card.type === 'food');
       return [...supermarket, ...sortedCards];
     },
+    lowOnEnergy() {
+      return this.energy < 5;
+    }
   },
   methods: {
     useCard(openCard) {
@@ -49,10 +52,10 @@ export default {
       this.balance -= openCard.card.cost;
 
       // If low on energy, then you don't get to enjoy the card
-      if (this.energy > 5) {
+      if (!this.lowOnEnergy) {
         this.fun += openCard.card.buy.fun;
       }
-      
+
       this.energy += openCard.card.buy.energy;
     },
     finishDay() {
@@ -150,6 +153,11 @@ export default {
       .balance {
         color: $riseup_mustard;
         font-size: 30px;
+      }
+      .energy {
+        &.low {
+          color: red;
+        }
       }
     }
     .open-cards {
