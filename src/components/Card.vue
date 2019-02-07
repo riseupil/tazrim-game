@@ -34,20 +34,22 @@
     box-shadow: 2px 2px 8px 0 $riseup_shadow_gray;
     padding: 10px 30px 30px 30px;
     width: 200px;
+    border-style: solid;
+    border-width: 8px;
     &.opportunity {
-      background: $riseup_light_blue;
+      border-color: $riseup_light_blue;
     }
     &.bill {
-      background: $riseup_shadow_gray;
+      border-color: $riseup_shadow_gray;
     }
     &.unexpected {
-      background: $riseup_light_red;
+      border-color: $riseup_light_red;
     }
     &.food {
-      background: $riseup_mustard;
+      border-color: $riseup_mustard;
     }
     &.eatout {
-      background: $riseup_light_green;
+      border-color: $riseup_light_green;
     }
     .top-line {
       display: flex;
