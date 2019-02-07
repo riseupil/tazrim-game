@@ -6,7 +6,7 @@
     </div>
     <div class="fun">Fun: {{ card.card.buy.fun || card.card.expire.fun }}</div>
     <div class="energy">Energy: {{ card.card.buy.energy || card.card.expire.energy }}</div>
-    <button class="button" v-on:click="clickcb(card)" :disabled="card.used">Buy</button>
+    <button class="button" v-on:click="clickcb(card)" :disabled="card.used || card.card.cost > balance">Buy</button>
     <div class="turns-left">
       <div>Expires in:</div>
       <div>{{ card.turnsLeft }}</div>
@@ -18,6 +18,7 @@
   export default {
     name: 'Card',
     props: [
+      'balance',
       'card',
       'clickcb'
     ],

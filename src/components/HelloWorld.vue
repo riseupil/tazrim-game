@@ -7,7 +7,7 @@
       <div class="fun">Fun: {{ fun }}</div>
     </div>
     <div class="open-cards">
-      <card v-for="card in sortedCards" v-bind:key="card.id" :card="card" :clickcb="useCard"></card>
+      <card v-for="card in sortedCards" v-bind:key="card.id" :card="card" :balance="balance" :clickcb="useCard"></card>
     </div>
     <button v-on:click="finishDay">Finish Day</button>
   </div>
