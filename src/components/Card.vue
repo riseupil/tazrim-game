@@ -1,5 +1,5 @@
 <template>
-  <div class="card">
+  <div class="card" v-bind:class="card.card.type">
     <div class="top-line">
       <div class="cost">{{ card.card.cost }}</div>
       <div class="title">{{ card.card.description }}</div>
@@ -34,6 +34,21 @@
     box-shadow: 2px 2px 8px 0 $riseup_shadow_gray;
     padding: 10px 30px 30px 30px;
     width: 200px;
+    &.opportunity {
+      background: $riseup_light_blue;
+    }
+    &.bill {
+      background: $riseup_shadow_gray;
+    }
+    &.unexpected {
+      background: $riseup_light_red;
+    }
+    &.food {
+      background: $riseup_mustard;
+    }
+    &.eatout {
+      background: $riseup_light_green;
+    }
     .top-line {
       display: flex;
       justify-content: space-between;
