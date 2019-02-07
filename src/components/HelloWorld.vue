@@ -1,5 +1,6 @@
 <template>
   <div>
+    <timer :callback="finishDay"></timer>
     <div class="container">
       <div class="score-board">
         <div class="day">Day: {{ day }}</div>
@@ -37,6 +38,7 @@ import _ from 'lodash';
 
 import Card from './Card.vue';
 import cards from '../cards';
+import Timer from './Timer.vue';
 
 export default {
   name: 'HelloWorld',
@@ -54,6 +56,7 @@ export default {
   },
   components: {
     Card,
+    Timer,
   },
   computed: {
     sortedCards() {
