@@ -47,7 +47,7 @@
       border-color: $riseup_light_blue;
     }
     &.bill {
-      border-color: $riseup_shadow_gray;
+      border-color: $riseup_light_red;
     }
     &.unexpected {
       border-color: $riseup_light_red;

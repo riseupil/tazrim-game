@@ -33,6 +33,10 @@
           <td>fun</td>
           <td v-for="(record, index) in scoreHistory" :key="index">{{ record.fun }}</td>
         </tr>
+        <tr>
+          <td>rolling fun</td>
+          <td v-for="(rolling, index) in rollingFun" :key="index">{{ rolling }}</td>
+        </tr>
       </table>
     </div>
   </div>
@@ -50,9 +54,9 @@ export default {
   name: 'HelloWorld',
   data() {
     return {
-      balance: 1000,
-      fun: 0,
-      energy: 10,
+      balance: 0,
+      fun: 1,
+      energy: 11,
       day: 0,
       deck: cards,
       openCards: [],
@@ -72,6 +76,13 @@ export default {
     },
     lowOnEnergy() {
       return this.energy <= 3;
+    },
+    rollingFun() {
+      return _.reduce(this.scoreHistory, (accumulator, value) => {
+        const previousValue = accumulator[accumulator.length - 1] || 0;
+        accumulator.push(previousValue + value.fun);
+        return accumulator;
+      }, [])
     }
   },
   methods: {
@@ -80,7 +91,7 @@ export default {
       this.balance -= openCard.card.cost;
 
       // If low on energy, then you don't get to enjoy the card
-      this.energy += openCard.card.buy.energy;
+      this._addToEnergy(openCard.card.buy.energy);
       if (!this.lowOnEnergy) {
         this.fun += openCard.card.buy.fun;
       }
@@ -92,6 +103,7 @@ export default {
       });
 
       this._punishForExpiredBadCards();
+      this.scoreHistory.push({ fun: this.fun, energy: this.energy });
 
       _.remove(this.openCards, c => c.turnsLeft === 0 || c.used);
 
@@ -101,10 +113,16 @@ export default {
       this._refreshBills();
       this._refreshUnexpected();
 
-      this.fun -= 1;
-      this.energy -= 1;
-      this.scoreHistory.push({ fun: this.fun, energy: this.energy });
+      this.fun = Math.max(0, this.fun - 1);
+      this._addToEnergy(-1);
       this.day += 1;
+
+      if (this.day % 7 === 1) {
+        this.balance += 600;
+      }
+      if (this.energy === 0) {
+        this.fun = 0;
+      }
     },
     _punishForExpiredBadCards() {
       _.chain(this.openCards)
@@ -113,7 +131,7 @@ export default {
         .map(c => c.card)
         .forEach(c => {
           this.fun += c.expire.fun;
-          this.energy += c.expire.energy;
+          this._addToEnergy(c.expire.energy);
         })
         .value();
     },
@@ -161,6 +179,10 @@ export default {
         card,
       });
     },
+    _addToEnergy(value) {
+      this.energy += value;
+      this.energy = Math.max(0, Math.min(10, this.energy));
+    }
   }
 }
 </script>

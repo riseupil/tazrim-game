@@ -1,5 +1,12 @@
 # tazrim
 
+## current engine rules:
+1) salary comes in every 7 days
+2) energy is [0, 10]
+3) fun is 0+
+4) getting to 0 energy also resets fun
+5) 
+
 ## Project setup
 ```
 npm install
