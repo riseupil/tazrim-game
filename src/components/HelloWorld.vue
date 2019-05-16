@@ -1,6 +1,6 @@
 <template>
   <div>
-    <timer :callback="finishDay"></timer>
+    <timer :callback="finishDay" :cycle="cycle"></timer>
     <div class="container">
       <div class="score-board">
         <div class="day">Day: {{ day }}</div>
@@ -47,7 +47,7 @@
 import _ from 'lodash';
 
 import Card from './Card.vue';
-import cards from '../cards';
+import config from '../config';
 import Timer from './Timer.vue';
 
 export default {
@@ -58,7 +58,7 @@ export default {
       fun: 1,
       energy: 11,
       day: 0,
-      deck: cards,
+      deck: [],
       openCards: [],
       openCardCounter: 0,
       scoreHistory: [],
@@ -84,6 +84,11 @@ export default {
         return accumulator;
       }, [])
     }
+  },
+  created() {
+    const mode = this.$route.query.mode || 'default';
+    this.deck = config[mode].cards;
+    this.cycle = config[mode].dayLength;
   },
   methods: {
     useCard(openCard) {

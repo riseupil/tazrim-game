@@ -5,15 +5,16 @@
 </template>
 
 <script>
+
 export default {
   name: 'Timer',
   props: [
     'callback',
+    'cycle',
   ],
   data() {
     return {
       current: 0,
-      cycle: 10,
     };
   },
   async created() {
