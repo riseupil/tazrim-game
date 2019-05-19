@@ -168,7 +168,9 @@ export default {
       const unexpctedOpenCard = _.find(this.openCards, c => c.card.type === 'unexpected');
       if (!unexpctedOpenCard) {
         const card = this._drawCardByType('unexpected');
-        this._createOpenCard(card);
+        if (card) {
+          this._createOpenCard(card);
+        }
       }
     },
     _drawCardByType(type) {
