@@ -9,6 +9,7 @@
     "start": "node server.js"
   },
   "dependencies": {
+    "express": "^4.17.1",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.11",
     "moment": "^2.24.0",
