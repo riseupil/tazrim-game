@@ -120,7 +120,7 @@ export default {
   a: {
     cards: [
       _createFoodCard('קניות בסופר', 300, 0, 10,),
-      _createBillCard('תשלום אינטרנט', 100, -1, -5, 6, 7,),
+      // _createBillCard('תשלום אינטרנט', 100, -1, -5, 6, 7,),
       // _createUnexpectedCard('החלפת נורה שנשרפה', 15, -1, -5,),
       // _createUnexpectedCard('סתימה בשן', 100, -5, -5,),
       // _createUnexpectedCard('תיקון לאוטו', 700, -5, -5,),
@@ -151,7 +151,7 @@ export default {
   b: {
     cards: [
       _createFoodCard('קניות בסופר', 300, 0, 10,),
-      _createBillCard('תשלום אינטרנט', 100, -1, -5, 6, 7,),
+      // _createBillCard('תשלום אינטרנט', 100, -1, -5, 6, 7,),
       // _createUnexpectedCard('החלפת נורה שנשרפה', 15, -1, -5,),
       // _createUnexpectedCard('סתימה בשן', 100, -5, -5,),
       // _createUnexpectedCard('תיקון לאוטו', 700, -5, -5,),
